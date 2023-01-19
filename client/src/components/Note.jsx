@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { useEffect } from "react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { NoteContext } from "../context/NoteContextProvider";
 
 function Note() {
-  const { notes, setNotes, note, setNote } = useContext(NoteContext);
-  const url = "http://localhost:5000/todos";
+  const { notes, setNotes } = useContext(NoteContext);
+  const url = `${import.meta.env.VITE_URL}/todos`;
 
   useEffect(() => {
     axios

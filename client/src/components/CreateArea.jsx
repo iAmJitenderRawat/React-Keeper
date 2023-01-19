@@ -5,7 +5,7 @@ import axios from "axios";
 
 function CreateArea() {
   const { note, setNote } = useContext(NoteContext);
-  const url = "http://localhost:5000/todos";
+  const url = `${import.meta.env.VITE_URL}/todos`;
   function handleChange(e) {
     const { name, value } = e.target;
     setNote((note) => {
