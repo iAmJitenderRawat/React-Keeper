@@ -6,8 +6,7 @@ import axios from "axios";
 
 function CreateArea() {
   const { note, setNote, setNotes, isUpdate, setIsUpdate, setIsLoading } = useContext(NoteContext);
-  // const url = `${import.meta.env.VITE_URL}/todos`;
-  const url = "http://localhost:5000/todos";
+  const url = `${import.meta.env.VITE_URL}/todos`;
 
   function getNotes() {
     axios

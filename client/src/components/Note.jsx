@@ -17,8 +17,8 @@ function Note() {
     note,
     setNote,
   } = useContext(NoteContext);
-  // const url = `${import.meta.env.VITE_URL}/todos`;
-  const url = "http://localhost:5000/todos";
+  const url = `${import.meta.env.VITE_URL}/todos`;
+
   function getNotes() {
     axios
       .get(url)
