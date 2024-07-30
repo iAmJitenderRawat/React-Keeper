@@ -1,11 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { NoteContext } from "../context/NoteContextProvider";
+import { GrUpdate } from "react-icons/gr";
 import { MdAdd } from "react-icons/md";
 import axios from "axios";
 
 function CreateArea() {
-  const { note, setNote } = useContext(NoteContext);
-  const url = `${import.meta.env.VITE_URL}/todos`;
+  const { note, setNote, setNotes, isUpdate, setIsUpdate, setIsLoading } = useContext(NoteContext);
+  // const url = `${import.meta.env.VITE_URL}/todos`;
+  const url = "http://localhost:5000/todos";
+
+  function getNotes() {
+    axios
+      .get(url)
+      .then((res) => {
+        setIsLoading(false);
+        setNotes(res.data);
+      })
+      .catch((err) => console.log("postError:", err));
+  }
+
   function handleChange(e) {
     const { name, value } = e.target;
     setNote((note) => {
@@ -15,18 +28,30 @@ function CreateArea() {
       };
     });
   }
- 
 
-  const postTodo = () => {
+  const addTodo = () => {
     axios
       .post(url, note)
-      .then((res) => console.log(res.data))
+      .then((res) => getNotes())
       .catch((err) => console.log("error:", err));
+  };
+  const updateToDo = () => {
+    axios
+      .patch(url + `/${note._id}`, {
+        _id: note._id,
+        title: note.title,
+        content: note.content,
+      })
+      .then((data) => {
+        setNote("");
+        setIsUpdate(false);
+      })
+      .catch((err) => console.log(err));
   };
   function handleAdd(e) {
     e.preventDefault();
-    postTodo();
-
+    isUpdate ? updateToDo() : addTodo();
+    getNotes();
     setNote({
       title: "",
       content: "",
@@ -51,7 +76,11 @@ function CreateArea() {
           value={note.content}
         />
         <button onClick={handleAdd}>
-          <MdAdd className="pos" size={30} />
+          {isUpdate ? (
+            <GrUpdate className="pos" size={30} />
+          ) : (
+            <MdAdd className="pos" size={30} />
+          )}
         </button>
       </form>
     </div>

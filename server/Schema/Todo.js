@@ -1,16 +1,17 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const Schema = mongoose.Schema;
-
-const TodoSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
+const TodoSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      // required: true,
+    },
   },
-  content: {
-    type: String,
-    required: true,
-  }
-});
+  { timestamps: true }
+);
 
-export const Todo = mongoose.model("Todo",TodoSchema);
+export const Todo = mongoose.model("Todo", TodoSchema);

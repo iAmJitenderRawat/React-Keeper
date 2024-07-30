@@ -1,17 +1,36 @@
-import { Spinner, Box, Heading } from "@chakra-ui/react";
 import React from "react";
 
 export const Loading = () => {
   return (
-    <Box className="center">
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="yellow.400"
-        size="xl"
-      />
-      <Heading color="yellow.400">Loading...</Heading>
-    </Box>
+    <main className="center">
+      <div className="loadingio-spinner-spin-xk5282rbjdk">
+        <div className="ldio-ti41mw7z2cp">
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 };

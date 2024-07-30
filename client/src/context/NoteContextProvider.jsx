@@ -6,11 +6,22 @@ export const NoteContextProvider = ({ children }) => {
     title: "",
     content:""
   });
-  
+  const [isUpdate, setIsUpdate]=useState(false);
   const [notes, setNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefresh, setIsRefresh] = useState(false);
   return (
     <NoteContext.Provider
-      value={{ note, setNote, notes, setNotes }}
+      value={{
+        note,
+        setNote,
+        notes,
+        setNotes,
+        isUpdate,
+        setIsUpdate,
+        isLoading,
+        setIsLoading
+      }}
     >
       {children}
     </NoteContext.Provider>

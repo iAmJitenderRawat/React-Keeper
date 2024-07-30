@@ -20,18 +20,47 @@ app.use(cors());
 const CONNECTION_URL = process.env.URL;
 const PORT = process.env.PORT;
 
-app.post("/todos", (req, res) => {
+app.post("/todos", async (req, res) => {
+  if(!req.body.title){
+    return res.status(400).json({ message: "Title is required" });
+  }
   const todo = new Todo({
     title: req.body.title,
-    content: req.body.content,
+    content: req?.body?.content,
   });
-  todo.save();
+  await todo.save();
   res.json(todo);
 });
 
 app.get("/todos", async (req, res) => {
   const todos = await Todo.find();
   res.json(todos);
+});
+
+app.get("/todos/:id", async (req, res) => {
+  try {
+    const todos = await Todo.findById(req.params.id);
+    if (!todos) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+    return res.json(todos);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
+app.patch("/todos/:id", async (req, res) => {
+  if(!req?.body?.title){
+    return res.status(400).json({ message: "Title is required" });
+  }
+  const result = await Todo.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: { title: req.body.title, content: req.body.content },
+    },
+    { new: true }
+  );
+  res.json(result);
 });
 
 app.delete("/todos/:id", async (req, res) => {
@@ -41,7 +70,7 @@ app.delete("/todos/:id", async (req, res) => {
 
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true })
-  .then(() =>
-    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
-  )
+  .then(() => console.log("MongoDB connected successfully"))
   .catch((err) => console.log("error:", err.message));
+
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
